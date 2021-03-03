@@ -14,4 +14,6 @@ public class DeptVO {
 	private String department_name;
 	private int manager_id;
 	private int location_id;
+	private String city;
+	private String last_name;
 }
