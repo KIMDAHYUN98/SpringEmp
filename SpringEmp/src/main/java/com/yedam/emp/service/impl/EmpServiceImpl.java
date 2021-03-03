@@ -9,34 +9,34 @@ import com.yedam.emp.EmpVO;
 import com.yedam.emp.service.EmpService;
 @Service
 public class EmpServiceImpl implements EmpService {
-	@Autowired EmpSpringDAO dao;
+	// DAO를 부름
+	
+	//@Autowired EmpSpringDAO dao;
+	//@Autowired EmpMybatisDAO dao;
+	@Autowired EmpMapper dao;
+	
 	@Override
 	public int insertEmp(EmpVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.insertEmp(vo);
 	}
 
 	@Override
 	public int updateEmp(EmpVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.updateEmp(vo);
 	}
 
 	@Override
 	public int DeleteEmp(EmpVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.DeleteEmp(vo);
 	}
 
 	@Override
 	public EmpVO getEmp(EmpVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getEmp(vo);
 	}
 
 	@Override
 	public List<EmpVO> getSearchEmp(EmpVO vo) {
-		// TODO Auto-generated method stub
 		return dao.getSearchEmp(vo);
 	}
 	

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.emp.service.impl.EmpMapper">
+	
+	<!-- select는 반드시 resultType 기입! -->
+	<select id="getSearchEmp" parameterType="emp" 
+			resultType="emp"> 
+		 <!-- select EMPLOYEE_ID,  
+				FIRST_NAME,  
+				LAST_NAME,  
+				EMAIL,  
+				PHONE_NUMBER,  
+				HIRE_DATE,  
+				JOB_ID,  
+				SALARY,  
+				COMMISSION_PCT,  
+				MANAGER_ID,  
+				DEPARTMENT_ID 
+		 from employees -->
+		 
+		SELECT e.*,
+			   d.department_name, 
+			   j.job_title
+		FROM employees e, departments d, jobs j
+		WHERE e.department_id = d.department_id
+		AND e.job_id = j.job_id
+		 
+		 <!--  select * from employees join ...  -->
+		 <where>
+		 	<!-- 부서별 사원 조회 -->
+		 	<if test="department_id != null and department_id != '' ">
+		 		DEPARTMENT_ID = #{department_id}	 
+		 	</if>
+		 	<!-- 부서번호가 없으면 전체 조회만 실행된다. -->
+		 	<if test="job_id != null and job_id != '' ">
+		 		AND JOB_ID = #{job_id}
+		 	</if>
+		 	<if test="first_name != null and first_name != '' ">
+ 		 		AND upper(FIRST_NAME) LIKE '%' || upper(#{first_name}) || '%'
+		 	</if>
+		 </where>
+	   
+	</select>
+	
+	<update id="updateEmp">
+		UPDATE EMPLOYEES
+			<set>
+			<if test="first_name !=null">		FIRST_NAME=#{first_name}, 		</if>
+			<if test="last_name !=null">		LAST_NAME=#{last_name}, 	 	</if>
+			<if test="email !=null">			EMAIL=#{email}, 				</if>
+			<if test="phone_number !=null">		PHONE_NUMBER=#{phone_number}, 	</if>
+			<if test="hire_date !=null">		HIRE_DATE=#{hire_date}, 		</if>
+			<if test="job_id !=null">			JOB_ID=#{job_id}, 				</if>
+			<if test="manager_id !=null">		MANAGER_ID=#{manager_id},  		</if>
+			<if test="department_id !=null">	DEPARTMENT_ID=#{department_id}	</if>
+			</set>
+		WHERE EMPLOYEE_ID=#{employee_id}
+	</update>
+	
+	<delete id="deleteEmp">
+		DELETE FROM EMPLOYEES WHERE EMPLOYEE_ID=#{employee_id}
+	</delete>
+	
+	<!-- 단건조회 -->
+	<select id="getEmp" resultType="emp">
+		SELECT * 
+		FROM EMPLOYEES 
+		WHERE EMPLOYEE_ID=#{employee_id}
+	</select>
+	
+	<!-- insert 구문 실행(in DAO) -->
+	<insert id="insertEmp" parameterType="emp">
+		INSERT INTO EMPLOYEES 
+					   (EMPLOYEE_ID, 
+						LAST_NAME,
+						EMAIL,
+						HIRE_DATE, 
+						JOB_ID, 
+						FIRST_NAME,  
+						DEPARTMENT_ID, 
+			<if test="manager_id !=null">MANAGER_ID, </if>
+						PHONE_NUMBER)
+		VALUES (#{employee_id}, <!-- #{} = (?, ?) -->
+				#{last_name}, 
+				#{email}, 
+				#{hire_date}, 
+				#{job_id}, 
+				#{first_name}, 
+				#{department_id},
+			<if test="manager_id !=null">#{manager_id},</if>
+				#{phone_number} )
+	</insert>
+</mapper>

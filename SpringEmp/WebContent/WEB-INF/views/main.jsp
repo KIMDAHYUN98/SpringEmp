@@ -7,7 +7,6 @@
 <title>views/main.jsp</title>
 </head>
 <body>
-메인페이지 입니다.
-<img src="./images/Chrysanthemum.jpg">
+<a href="getSearchEmp">사원조회</a>
 </body>
 </html>

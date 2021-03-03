@@ -13,6 +13,7 @@ import com.yedam.emp.EmpVO;
 
 @Repository
 public class EmpSpringDAO {
+	
 	@Autowired JdbcTemplate jdbc;
 	
 	private final String INSERT_EMP = "INSERT INTO EMPLOYEES "
@@ -23,9 +24,9 @@ public class EmpSpringDAO {
 									+ " JOB_ID,"
 									+ " FIRST_NAME, "
 									+ " DEPARTMENT_ID,"
-									+ " PHONE_NUMBER"
+									+ " PHONE_NUMBER, "
 									+ " MANAGER_ID) "
-									+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+									+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
 	private final String UPDATE_EMP = "UPDATE EMPLOYEES SET "
 								+ "    FIRST_NAME = ?, "
@@ -38,7 +39,7 @@ public class EmpSpringDAO {
 								+ "    DEPARTMENT_ID = ? "
 								+ "	   WHERE EMPLOYEE_ID = ?";
 	
-	private final String DELETE_EMP="";
+	private final String DELETE_EMP = "DELETE FROM EMPLOYEES WHERE EMPLOYEE_ID = ?";
 	
 	private final String GET_EMP = "SELECT * FROM EMPLOYEES WHERE EMPLOYEE_ID = ?";
 	
@@ -57,7 +58,6 @@ public class EmpSpringDAO {
 									+ " order by FIRST_NAME";
 
 	// 등록
-	
 	public int insertEmp(EmpVO vo) {
 		int result = 0;
 		result = jdbc.update(INSERT_EMP, vo.getEmployee_id()
@@ -76,17 +76,33 @@ public class EmpSpringDAO {
 	
 	public int updateEmp(EmpVO vo) {
 		int result = 0;
-		
+		result = jdbc.update(UPDATE_EMP, vo.getFirst_name()
+									   , vo.getLast_name()
+									   , vo.getEmail()
+									   , vo.getPhone_number()
+									   , vo.getHire_date()
+									   , vo.getJob_id()
+									   , vo.getManager_id()
+									   , vo.getDepartment_id()
+									   , vo.getEmployee_id() );
+									 
 		return result;
 	}
-	
+
 	// 삭제
+	
+	public int deleteEmp(EmpVO vo) {
+		int result = 0;
+		result = jdbc.update(DELETE_EMP, vo.getEmployee_id());
+		return result;
+	}
 	
 	// 단건 조회
 	
 	public EmpVO getEmp(EmpVO empVO) {
 		return jdbc.queryForObject(GET_EMP, new EmpRowMapper(), 
 											empVO.getEmployee_id());
+		
 	}
 	
 	// 검색 조회
