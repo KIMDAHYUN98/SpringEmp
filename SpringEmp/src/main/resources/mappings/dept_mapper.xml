@@ -5,13 +5,14 @@
 <mapper namespace="com.yedam.emp.service.impl.DeptMapper">
 	<select id="getSearchDept" parameterType="dept" resultType="dept">
 		
-		SELECT d.*, 
+		select * from departments
+	 
+		<!-- SELECT d.*, 
 			   e.last_name, 
 			   l.city
 		FROM departments d, employees e, locations l
 		WHERE d.manager_id = e.employee_id
-		AND d.location_id = l.location_id
-	 
+		AND d.location_id = l.location_id --> 
 	 <where>
 		<if test="department_name != null and department_name != '' ">
 			DEPARTMENT_NAME = #{department_name}

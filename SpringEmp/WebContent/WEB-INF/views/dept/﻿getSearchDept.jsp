@@ -16,10 +16,12 @@
 </script>
 </head>
 <body>
-<h2>부서 목록</h2>
+<h2>상세 보기</h2>
 <c:forEach items="${list }" var="dept">
 	<a href="getDept?department_id=${dept.department_id }">${dept.department_name }</a>
-	${dept.manager_id } ${dept.location_id }<br>
+	${dept.manager_id } ${dept.location_id }
+	
+	<br>
 </c:forEach>
 
 <button id="btnUpd">등록</button>

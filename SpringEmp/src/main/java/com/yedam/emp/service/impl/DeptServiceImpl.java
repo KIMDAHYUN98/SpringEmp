@@ -10,9 +10,9 @@ import com.yedam.emp.service.DeptService;
 
 @Service
 public class DeptServiceImpl implements DeptService{
-	//@Autowired DeptSpringDAO dao;
+	@Autowired DeptSpringDAO dao;
 	
-	@Autowired DeptMapper dao;
+	//@Autowired DeptMapper dao;
 	@Override
 	public int insertDept(DeptVO vo) {
 		return dao.insertDept(vo);
