@@ -2,31 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.emp.service.impl.EmpMapper">
-	<!-- select는 반드시 resultType 기입! -->
-	<select id="getSearchEmp" parameterType="emp" 
-			resultType="emp"> 
-		 <!-- select EMPLOYEE_ID,  
-				FIRST_NAME,  
-				LAST_NAME,  
-				EMAIL,  
-				PHONE_NUMBER,  
-				HIRE_DATE,  
-				JOB_ID,  
-				SALARY,  
-				COMMISSION_PCT,  
-				MANAGER_ID,  
-				DEPARTMENT_ID 
-		 from employees -->
-		 
-		SELECT e.*,
-			   d.department_name, 
-			   j.job_title
-		FROM employees e, departments d, jobs j
-		WHERE e.department_id = d.department_id
-		AND e.job_id = j.job_id
-		 
-		 <!--  select * from employees join ...  -->
-		 <where>
+
+	<!-- 레코드 건수 조회 -->
+<select id="getCount" resultType="int">
+		SELECT COUNT(*) FROM EMPLOYEES
+	<where>
 		 	<!-- 부서별 사원 조회 -->
 		 	<if test="department_id != null and department_id != '' ">
 		 		DEPARTMENT_ID = #{department_id}	 
@@ -38,8 +18,45 @@
 		 	<if test="first_name != null and first_name != '' ">
  		 		AND upper(FIRST_NAME) LIKE '%' || upper(#{first_name}) || '%'
 		 	</if>
-		 </where>
-	   
+	</where>
+</select>
+	
+<!-- select는 반드시 resultType 기입! -->
+<select id="getSearchEmp" parameterType="empSearchVO" 
+			resultType="emp"> 
+		 
+SELECT b.*  FROM ( SELECT  ROWNUM rn,a.*  FROM ( 
+		
+		<!-- select e.*, d.department_name 
+			from employees e, departments d
+		where e.department_id = d.department_id -->
+		<!-- select * from employees -->
+		
+		SELECT E.*,
+			   D.DEPARTMENT_NAME, 
+			   J.JOB_TITLE
+		FROM EMPLOYEES E, DEPARTMENTS D, JOBS J
+		WHERE E.DEPARTMENT_ID = D.DEPARTMENT_ID
+		AND E.JOB_ID = J.JOB_ID 
+		
+		 	<!-- 부서별 사원 조회 -->
+		 	
+		 	<if test="department_id != null and department_id != '' ">
+		 		AND E.DEPARTMENT_ID = #{department_id}	 
+		 	</if>
+		 	<!-- 부서번호가 없으면 전체 조회만 실행된다. -->
+		 	<if test="job_id != null and job_id != '' ">
+		 		AND J.JOB_ID = #{job_id}
+		 	</if>
+		 	<if test="first_name != null and first_name != '' ">
+ 		 		AND upper(FIRST_NAME) LIKE '%' || upper(#{first_name}) || '%'
+		 	</if>
+		
+		 <!-- order by -->
+		
+	   	 ORDER BY employee_id
+	   	 <!-- subQUery -->
+	   	 ) a ) b WHERE rn BETWEEN #{start} AND #{end}
 	</select>
 	
 	<update id="updateEmp">

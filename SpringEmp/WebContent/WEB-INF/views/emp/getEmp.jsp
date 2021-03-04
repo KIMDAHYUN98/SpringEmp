@@ -16,6 +16,8 @@
 </script>
 </head>
 <body>
+파라미터 ${employee} <!-- 클래스 이름의 첫글자만 소문자로 변경해서 기입한다 -->
+<hr>
 <h2>상세 사원</h2>
 사번 : ${emp.employee_id } <br>
 이름 : ${emp.first_name } ${emp.last_name } <br>

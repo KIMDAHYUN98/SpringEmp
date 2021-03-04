@@ -9,8 +9,10 @@
 </head>
 <body>
 <h2>직업 목록</h2>
-	
-	
+	<c:forEach var="job" items="${list }">
+		${job.job_id } ${job.job_title }
+		${job.min_salary } ${job.max_salary }<br>
+	</c:forEach>
 	<button id="btnUpd">등록</button>
 </body>
 </html>

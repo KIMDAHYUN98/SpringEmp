@@ -3,6 +3,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.emp.service.impl.JobMapper">
 	<select id="getSearchJob" parameterType="job" resultType="job">
-		select * from jobs;
+		select * from jobs
+	</select>
+	
+	<select id="getJob" resultType="job">
+		select *
+		from jobs
+		where job_id=#{job_id}
 	</select>
 </mapper>

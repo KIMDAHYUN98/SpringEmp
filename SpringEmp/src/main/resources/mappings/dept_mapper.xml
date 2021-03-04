@@ -3,23 +3,50 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yedam.emp.service.impl.DeptMapper">
-	<select id="getSearchDept" parameterType="dept" resultType="dept">
-		
-		select * from departments
-	 
-		<!-- SELECT d.*, 
-			   e.last_name, 
-			   l.city
-		FROM departments d, employees e, locations l
-		WHERE d.manager_id = e.employee_id
-		AND d.location_id = l.location_id --> 
-	 <where>
+
+<select id="getCount" resultType="int">
+	SELECT COUNT(*) FROM DEPARTMENTS
+	<where>
 		<if test="department_name != null and department_name != '' ">
-			DEPARTMENT_NAME = #{department_name}
+				DEPARTMENT_NAME = #{department_name}
 		</if>
 		<if test="manager_id != null and manager_id != '' ">
-			AND MANAGER_ID = #{manager_id}
+				AND MANAGER_ID = #{manager_id}
 		</if>
-	</where> 
-	</select>
+	</where>
+</select>
+
+<select id="getSearchDept" parameterType="DeptSearchVO" resultType="dept">
+		
+		<!-- select * from departments -->
+SELECT b.*  FROM ( 
+SELECT  ROWNUM rn,a.*  FROM ( 	 
+		SELECT D.DEPARTMENT_ID, D.DEPARTMENT_NAME, D.MANAGER_ID,
+			   E.LAST_NAME, 
+			   L.CITY
+		FROM DEPARTMENTS D, EMPLOYEES E, LOCATIONS L
+		WHERE D.MANAGER_ID = E.EMPLOYEE_ID
+		AND D.LOCATION_ID = L.LOCATION_ID
+	
+		<if test="department_name != null and department_name != '' ">
+			AND D.DEPARTMENT_NAME = #{department_name}
+		</if>
+		<if test="manager_id != null and manager_id != '' ">
+			AND D.MANAGER_ID = #{manager_id}
+		</if>
+	  ) a ) b WHERE rn BETWEEN #{start} AND #{end}
+</select>
+
+<select id="getDept" resultType="dept">
+	select *
+	from departments
+	where department_id=#{department_id}
+</select>
+
+<update id="updateDept">
+	update departments
+	<set>
+		<if test="department_id != null">		department_id</if>
+	</set>
+</update>
 </mapper>

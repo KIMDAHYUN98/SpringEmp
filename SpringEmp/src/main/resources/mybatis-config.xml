@@ -19,5 +19,8 @@
  	<typeAlias type="com.yedam.emp.EmpVO" alias="emp"/>
  	<typeAlias type="com.yedam.emp.DeptVO" alias="dept"/>
  	<typeAlias type="com.yedam.emp.JobVO" alias="job"/>
+ 	
+ 	<!-- 해당 패키지는 자동으로 alias 를 생성해준다. -->
+ 	<package name="com.yedam.emp"/>
  </typeAliases>
  </configuration>
