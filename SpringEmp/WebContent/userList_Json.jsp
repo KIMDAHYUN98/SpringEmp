@@ -73,15 +73,15 @@
 			/* var param = {id: $('[name=id]').val(), 
 						name: $('[name=name]').val(), 
 						password: $('[name=password]').val(), 
-						role: $('[name=role]').val()}; */ // 제이슨 구조(=객체)로 생성
+						role: $('[name=role]').val()}; */ 				  // 제이슨 구조(=객체)로 생성
 			
 			$.ajax({
 				url : 'user',
-				method : 'post', 				  // post 방식의 url을 부를 것 이다.
+				method : 'post', 				 						  // post 방식의 url을 부를 것 이다.
 				data : JSON.stringify($('#form1').serializeObject()), 	  // 넘겨줄 데이터, 넘겨 받을 때 스트링으로 변환
-			    contentType : 'application/json', // 보낼 데이터가 json -> @requestBody
-				dataType : 'json', 				  // 응답 결과가 json = JSON.parse()
-				success : function(response) { // 다시 parsing -> 자바스크립트 객체로 변환
+			    contentType : 'application/json', 						  // 보낼 데이터가 json -> @requestBody
+				dataType : 'json', 				  						  // 응답 결과가 json = JSON.parse()
+				success : function(response) { 							  // 다시 parsing -> 자바스크립트 객체로 변환
 					console.table(response);
 				}
 				
