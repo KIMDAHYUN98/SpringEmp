@@ -37,16 +37,25 @@ SELECT  ROWNUM rn,a.*  FROM (
 	  ) a ) b WHERE rn BETWEEN #{start} AND #{end}
 </select>
 
+<update id="updateDept">
+	update departments
+	<set>
+	<if test="department_name !=null">	DEPARTMENT_NAME=#{department_name}	</if>
+	<if test="manager_id !=null">		MANAGER_ID=#{manager_id}			</if>
+	<if test="location_id !=null">		LOCATION_ID=#{location_id}			</if>
+	</set>
+	where department_id=#{department_id}
+</update>
+
 <select id="getDept" resultType="dept">
 	select *
 	from departments
 	where department_id=#{department_id}
 </select>
 
-<update id="updateDept">
-	update departments
-	<set>
-		<if test="department_id != null">		department_id</if>
-	</set>
-</update>
+<insert id="insertDept" parameterType="dept">
+	insert into departments (department_id, department_name, manager_id, location_id)
+					  values(#{department_id}, #{department_name}, #{manager_id}, #{location_id})
+</insert>
+
 </mapper>

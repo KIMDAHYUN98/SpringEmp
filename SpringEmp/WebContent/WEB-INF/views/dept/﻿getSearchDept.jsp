@@ -40,7 +40,6 @@
 			searchFrm.submit();
 		}
 	</script>
-
 <button id="btnUpd">등록</button>
 </body>
 </html>

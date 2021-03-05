@@ -8,5 +8,7 @@
 </head>
 <body>
 <a href="getSearchEmp">사원조회</a>
+<a href="getSearchDept">부서조회</a>
+<a href="getSearchJob">직업조회</a>
 </body>
 </html>

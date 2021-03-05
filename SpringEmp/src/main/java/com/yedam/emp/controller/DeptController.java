@@ -9,23 +9,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yedam.emp.DeptSearchVO;
 import com.yedam.emp.DeptVO;
+import com.yedam.emp.EmpSearchVO;
+import com.yedam.emp.JobVO;
 import com.yedam.emp.common.Paging;
 import com.yedam.emp.service.DeptService;
+import com.yedam.emp.service.EmpService;
+import com.yedam.emp.service.JobService;
 
 @Controller
 public class DeptController {
 
-	@Autowired
-	DeptService deptService;
+	@Autowired EmpService empService;
+	@Autowired DeptService deptService;
+	@Autowired JobService jobService;
 	
 	// 등록 폼
-	@GetMapping("/insertDept")
-	public String insertDept(DeptVO vo) {
-		return "/dept/insertDept";
+	@GetMapping("/﻿insertDept")
+	public String insertDept(DeptVO vo, Model model, EmpSearchVO empvo, JobVO jobvo) {
+		model.addAttribute("empList", empService.getSearchEmp(empvo));
+		model.addAttribute("jobList", jobService.getSearchJob(jobvo));
+		return "/dept/﻿insertDept";
 	}
 	
 	// 등록처리
-	@PostMapping("/insertDept")
+	@PostMapping("/﻿insertDept")
 	public String insertDeptProc(DeptVO vo) {
 		deptService.insertDept(vo);
 		return "redirect:/getSearchDept"; 
@@ -33,9 +40,11 @@ public class DeptController {
 	
 	// 수정 폼
 	@GetMapping("/updateDept")
-	public String updateDept(DeptVO vo, Model model) {
+	public String updateDept(DeptVO vo, Model model, EmpSearchVO empvo, JobVO jobvo) {
 		model.addAttribute("deptVO", deptService.getDept(vo));
-		return "/dept/updateDept";
+		model.addAttribute("empList", empService.getSearchEmp(empvo));
+		model.addAttribute("jobList", jobService.getSearchJob(jobvo));
+		return "/dept/﻿updateDept";
 	}
 	
 	// 수정처리

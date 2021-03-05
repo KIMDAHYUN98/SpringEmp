@@ -7,11 +7,20 @@
 <title>order/insertOrder.jsp</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-
-$('btn').on('click', function() {
-	$('tr:last').clone().appendTo($('tbody'));
-	$('input:last').val();
-})
+	
+	var i = 3;
+	$(document).ready(function(){
+		$('#btn').click(function(){
+			$('tr:last').clone().each(function(){
+				$('tr:last').find('input:first').attr('name', 'ords[' + i + '].no');
+				$('tr:last').find('input:last').attr('name', 'ords[' + i + '].cnt');
+				i++;
+			}).appendTo($('tbody'));	
+			
+			
+		});
+	});
+	
 </script>
 </head>
 <body>
