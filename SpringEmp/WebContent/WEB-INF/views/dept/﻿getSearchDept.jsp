@@ -12,6 +12,7 @@
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+	
 	$(function() {
 		$('#btnUpd').on('click', function() {
 			location.href = "insertDept?department_id=${dept.department_id }";

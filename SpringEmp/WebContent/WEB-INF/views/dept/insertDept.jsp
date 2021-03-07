@@ -10,20 +10,6 @@
 <title>﻿dept/insertDept.jsp</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-$(function(){
-	// 이메일 중복체크
-	$('#btnEmail').on("click", function() {
-		$.ajax({
-			url : '../EmailCheck',
-			data : "email=" + ﻿$("[name=email]").val(), // 서버에 보낼 파라미터
-			dataType : "xml", 						   // 결과 타입
-			success: function(response) {
-				
-				$('#emailResult').html($(response).find("email").text()) // jquery 함수
-			},
-		})
-	})
-})
 </script>
 </head>
 <body>

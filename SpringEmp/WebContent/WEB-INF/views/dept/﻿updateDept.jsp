@@ -18,14 +18,15 @@
 	department_name   <form:input path="department_name"/><br>
 	manager_id    
 	<form:select path="manager_id">
-			<option value="">선택</option>
-			<form:options items="${empList}" itemValue="manager_id"/>
+		<option value="">선택</option>
+		<form:options items="${empList}" itemValue="manager_id"/><br>
 	</form:select><br>
 	location_id
-	<form:select path="location_id">
+	<%-- <form:select path="location_id">
 		<option value="">선택</option>
-		<form:options items="${jobList }" itemValue="location_id"/>
-	</form:select><br>
+		<form:options items="${empList }" itemValue="location_id"/>
+	</form:select><br> --%>
+
 	
 	<button type="submit">등록</button>
 	<button type="reset">취소</button>

@@ -38,15 +38,40 @@
 	function userDelete() {
 		//삭제 버튼 클릭
 		$('body').on('click','#btnDelete',function(){
-
-		}); //삭제 버튼 클릭
+			var userId = $(this).closest('tr').find('#hidden_userId').val();
+			var result = confirm(userId +" 사용자를 정말로 삭제하시겠습니까?");
+			if(result) {
+				$.ajax({
+					url:'user/'+userId,  
+					type:'DELETE',
+					contentType:'application/json;charset=utf-8',
+					dataType:'json',
+					error:function(xhr,status,msg){
+						console.log("상태값 :" + status + " Http에러메시지 :"+msg);
+					}, success:function(xhr) {
+						console.log(xhr.result);
+						userList();
+					}
+				});      }//if
+		});  //삭제 버튼 클릭
 	}//userDelete
 	
 	//사용자 조회 요청
 	function userSelect() {
 		//조회 버튼 클릭
 		$('body').on('click','#btnSelect',function(){
-
+			var userId = $(this).closest('tr').find('#hidden_userId').val();
+			//특정 사용자 조회
+			$.ajax({
+				url:'user/'+userId,
+				type:'GET',
+				contentType:'application/json;charset=utf-8',
+				dataType:'json',
+				error:function(xhr,status,msg){
+					alert("상태값 :" + status + " Http에러메시지 :"+msg);
+				},
+				success:userSelectResult
+			});
 		}); //조회 버튼 클릭
 	}//userSelect
 	
@@ -62,7 +87,23 @@
 	function userUpdate() {
 		//수정 버튼 클릭
 		$('#btnUpdate').on('click',function(){
-
+			var id = $('input:text[name="id"]').val();
+			var name = $('input:text[name="name"]').val();
+			var password = $('input:text[name="password"]').val();
+			var role = $('select[name="role"]').val();		
+			$.ajax({ 
+			    url: "user", 
+			    type: 'PUT', 
+			    dataType: 'json', 
+			    data: JSON.stringify({ id: id, name:name,password: password, role: role }),
+			    contentType: 'application/json',
+			    success: function(data) { 
+			        userList();
+			    },
+			    error:function(xhr, status, message) { 
+			        alert(" status: "+status+" er:"+message);
+			    }
+			});
 		});//수정 버튼 클릭
 	}//userUpdate
 	
