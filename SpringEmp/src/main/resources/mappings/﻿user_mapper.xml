@@ -34,6 +34,17 @@
 		where id=#{id}
 	</update>
 	
+	<!-- 수정(동적쿼리) -->
+	<update id="updatePw">
+		update users
+		<set>
+			<if test="password != null and password != ''">password=#{password}</if>
+			<if test="name != null and name != ''">, name=#{name}</if>
+			<if test="role != null and role != ''">, role=#{role}</if>
+		</set>
+		where id=#{id}
+	</update>
+	
 	<delete id="deletetUser"> 
 		delete from users where id=#{id}
 	</delete>

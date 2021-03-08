@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>웹서비스 클라이언트(JSON)</title>
+<title>RESTful 웹서비스 클라이언트(JSON)</title>
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -45,11 +45,10 @@
 			var userId = $(this).closest('tr').find('#hidden_userId').val();
 
 				$.ajax({
-					url:'deleteUser', 
-					data: {id:userId}, 								// 보낼 데이터
-					type:'GET', 									// default
+					url:'user/'+userId,  
+					type:'DELETE',
 					//contentType:'application/json;charset=utf-8',          pathValue를 쓸거면 contentType은 쓸 필요 없다
-					dataType:'json', // 넘겨받는 구조는 무조건 json 타입
+					dataType:'json',
 					error:function(xhr,status,msg){
 						console.log("상태값 :" + status + " Http에러메시지 :"+msg);
 					}, 
@@ -71,10 +70,9 @@
 			var userId = $(this).closest('tr').find('#hidden_userId').val(); 	// val 값을 읽어온다
 			//특정 사용자 조회, 읽어온 아디값으로 단건 조회
 			$.ajax({
-				url:'getUser',
-				data: {id:userId}, // "id=" + userId 							// 알아서 쿼리 문자열로 변환한다.
-				type:'GET', // default
-																				// 보낼 데이터가 json 타입, get 방식일때는 생략, @requestBody가 있을때는 contentTyp을 작성한다.
+				url:'user/'+userId,
+				type:'GET',
+				contentType:'application/json;charset=utf-8', 					// 보낼 데이터가 json 타입, get 방식일때는 생략
 				dataType:'json', 
 				error:function(xhr,status,msg){
 					alert("상태값 :" + status + " Http에러메시지 :"+msg);
@@ -97,19 +95,23 @@
 		//수정 버튼 클릭
 		$('#btnUpdate').on('click',function(){ 							// 직접 이벤트를 실행
 			// id 값을 가지고 tr 태그에서 처리한다.
-			$.ajax({
-				url : 'updateUser',
-				method : 'POST', 				 						  // post 방식의 url을 부를 것 이다.
-				data : $('#form1').serialize(), 	  // 넘겨줄 데이터, 넘겨 받을 때 스트링으로 변환					  // 보낼 데이터가 json -> @requestBody
-				dataType : 'json',
+			$.ajax({		
+				url : "user",
+				method : "PUT",
+				data : JSON.stringify($('#form1').serializeObject()),
+				contentType : "application/json", 						// 보낼 데이터 타입과 contentType이 서로 동일해야 한다.
+				dataType : "json",
 				success : function(response) {
 					// 폼 필드 초기화
 					document.form1.reset();
 					// tr 태그 부분을 수정된 데이터로 교체(replace), 또는 데이터 전체 조회 
 					// 기존 tr 태그와 교체
 					var tr = makeTr(response);
-					var oldTr = $('td:contains("'+ response.id +'")').parent(); 
-					oldTr.replaceWith(tr);
+					var oldTr = $('td:contains("'+ response.id +'")').parent(); // response가 넘겨받은 id 값이 td 태그에 포함 된다.
+					oldTr.replaceWith(tr); 
+					// oldTr의 id 값을 찾아서 new tr로 교체
+					// filterContains 태그 안에 있는 단어가 있으면 contains를 실행한다.
+					// contains(response.id) => true | false 를 리턴한다.
 				}
 			})
 		});//수정 버튼 클릭
@@ -125,9 +127,10 @@
 						role: $('[name=role]').val()}; */ 				  // 제이슨 구조(=객체)로 생성
 			
 			$.ajax({
-				url : 'insertUser',
-				method : 'POST', 				 						  // post 방식의 url을 부를 것 이다.
-				data : $('#form1').serialize(), 	  // 넘겨줄 데이터, 넘겨 받을 때 스트링으로 변환					  // 보낼 데이터가 json -> @requestBody
+				url : 'user',
+				method : 'post', 				 						  // post 방식의 url을 부를 것 이다.
+				data : JSON.stringify($('#form1').serializeObject()), 	  // 넘겨줄 데이터, 넘겨 받을 때 스트링으로 변환
+			    contentType : 'application/json', 						  // 보낼 데이터가 json -> @requestBody
 				dataType : 'json', 				  						  // 응답 결과가 json = JSON.parse()
 				success : function(response) { 							  // 다시 parsing -> 자바스크립트 객체로 변환
 					console.table(response);
@@ -140,7 +143,7 @@
 	//사용자 목록 조회 요청
 	function userList() {
 		$.ajax({
-			url:'getUserList',
+			url:'user',
 			type:'GET',
 			dataType:'json',
 			error:function(xhr,status,msg){

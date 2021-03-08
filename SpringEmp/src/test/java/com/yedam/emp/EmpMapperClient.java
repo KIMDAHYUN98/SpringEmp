@@ -62,7 +62,7 @@ public class EmpMapperClient {
 	//@Test
 	public void getSearchEmp() {
 		EmpVO vo = EmpVO.builder().first_name("na").build(); // build를 사용하면 더 편리함(lombok)
-		List<EmpVO> list = empSerivce.getSearchEmp(vo);
+		List<EmpSearchVO> list = empSerivce.getSearchEmp(vo);
 		System.out.println(list);
 	}
 	

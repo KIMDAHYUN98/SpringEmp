@@ -15,7 +15,8 @@
 	
 	$(function() {
 		$('#btnUpd').on('click', function() {
-			location.href = "insertDept?department_id=${dept.department_id }";
+			location.href = "insertDept";
+			//?department_id=${dept.department_id }
 		});
 	});
 </script>

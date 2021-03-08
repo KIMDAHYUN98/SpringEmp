@@ -17,7 +17,7 @@ public interface EmpService {
 	// 단건조회
 		public EmpVO getEmp(EmpVO vo);
 	// 전체/검색 조회
-		public List<EmpSearchVO> getSearchEmp(EmpSearchVO vo);
+		public List<EmpSearchVO> getSearchEmp(EmpVO vo);
 		
 		public int getCount(EmpSearchVO vo);
 	

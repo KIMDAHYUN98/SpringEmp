@@ -37,5 +37,38 @@ public class UserServiceImpl implements UserService {
 	public List<UserVO> getSearchUser(UserVO vo) {
 		return dao.getSearchUser(vo);
 	}
+
+	@Override
+	public boolean loginCheck(UserVO vo) {
+		// 단건 조회
+		 UserVO userVO = dao.getUser(vo);
+		
+		 // 아이디가 일치하는 지 체크
+		 if(userVO == null) {
+			 return false;
+		 }
+		
+		// 아이디가 같으면 패스워드 일치하는 지 체크
+		if(userVO.getPassword().equals(vo.getPassword())) { 	// db의 password VS vo.getPassword 비교
+		
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean updatePw(UserVO vo) { // 패스워드 변경
+		// 단건 조회
+		UserVO userVO = dao.getUser(vo);
+		
+		// 기존 패스워드와 일치하는 지 체크		
+		if(userVO.getPassword().equals(vo.getOldpassword())) {
+			dao.updatePw(vo);
+		 	return true;
+		} else {
+			return false;
+		}
 	
+	}
 }

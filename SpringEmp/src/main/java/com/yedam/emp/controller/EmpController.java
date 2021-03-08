@@ -1,8 +1,11 @@
 package com.yedam.emp.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +16,7 @@ import com.yedam.emp.DeptSearchVO;
 import com.yedam.emp.DeptVO;
 import com.yedam.emp.EmpSearchVO;
 import com.yedam.emp.EmpVO;
+import com.yedam.emp.EmpValidation;
 import com.yedam.emp.JobVO;
 import com.yedam.emp.common.Paging;
 import com.yedam.emp.service.DeptService;
@@ -41,9 +45,19 @@ public class EmpController {
 	}
 
 	@PostMapping("/insertEmp") // 등록 처리(등록버튼을 누르면 모든 파라미터 값이 자동으로 vo에 담긴다)
-	public String insertEmpProc(EmpVO vo) {
-		empService.insertEmp(vo);
-		return "redirect:/getSearchEmp"; // 목록으로 이동
+	public String insertEmpProc(@Valid EmpVO vo, BindingResult errors,  DeptSearchVO deptvo, JobVO jobvo, Model model) {
+
+		//EmpValidation empValidation = new EmpValidation();
+		//empValidation.validate(vo, errors);							
+		if(errors.hasErrors()) { 												// 만약 에러가 하나라도 있으면
+			model.addAttribute("deptList", deptService.getSearchDept(deptvo));
+			model.addAttribute("jobList", jobService.getSearchJob(jobvo));
+			return "/emp/insertEmp"; 											// 등록페이지로 넘어간다.
+		} else {
+			empService.insertEmp(vo);
+			return "redirect:/getSearchEmp"; 									// 등록 후 목록으로 이동
+			
+		}
 	}
 	
 	@GetMapping("/updateEmp") // 수정 폼

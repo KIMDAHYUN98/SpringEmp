@@ -8,4 +8,6 @@ public class UserVO {
 	private String password;
 	private String name;
 	private String role;
+	private String oldpassword;
+	private String newpassword;
 }

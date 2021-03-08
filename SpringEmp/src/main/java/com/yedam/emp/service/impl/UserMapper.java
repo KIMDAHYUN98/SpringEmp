@@ -15,4 +15,6 @@ public interface UserMapper {
 	public UserVO getUser(UserVO vo);
 	
 	public List<UserVO> getSearchUser(UserVO vo);
+	
+	public boolean updatePw(UserVO vo);
 }
