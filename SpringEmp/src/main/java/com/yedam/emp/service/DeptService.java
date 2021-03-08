@@ -1,5 +1,6 @@
 package com.yedam.emp.service;
 
+
 import java.util.List;
 
 import com.yedam.emp.DeptSearchVO;
@@ -15,7 +16,7 @@ public interface DeptService {
 	
 	public DeptVO getDept(DeptVO vo);
 	
-	public List<DeptSearchVO> getSearchDept(DeptSearchVO deptvo);
+	public List<DeptVO> getSearchDept(DeptVO deptvo);
 	
 	public int getCount(DeptSearchVO vo);
 }

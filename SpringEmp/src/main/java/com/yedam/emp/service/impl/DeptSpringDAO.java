@@ -88,7 +88,7 @@ public class DeptSpringDAO {
 			vo.setDepartment_id(rs.getInt("department_id"));
 			vo.setDepartment_name(rs.getString("department_name"));
 			vo.setManager_id(rs.getString("manager_id"));
-			vo.setLocation_id(rs.getInt("location_id"));
+			vo.setLocation_id(rs.getString("location_id"));
 			return vo;
 		}
 		

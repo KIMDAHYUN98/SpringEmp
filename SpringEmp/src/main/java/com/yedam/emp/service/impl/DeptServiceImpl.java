@@ -36,7 +36,7 @@ public class DeptServiceImpl implements DeptService{
 	}
 
 	@Override
-	public List<DeptSearchVO> getSearchDept(DeptSearchVO vo) {
+	public List<DeptVO> getSearchDept(DeptVO vo) {
 		return dao.getSearchDept(vo);
 	}
 	

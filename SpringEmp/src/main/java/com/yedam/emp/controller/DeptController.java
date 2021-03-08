@@ -11,10 +11,12 @@ import com.yedam.emp.DeptSearchVO;
 import com.yedam.emp.DeptVO;
 import com.yedam.emp.EmpSearchVO;
 import com.yedam.emp.JobVO;
+import com.yedam.emp.LocationVO;
 import com.yedam.emp.common.Paging;
 import com.yedam.emp.service.DeptService;
 import com.yedam.emp.service.EmpService;
 import com.yedam.emp.service.JobService;
+import com.yedam.emp.service.impl.LocService;
 
 @Controller
 public class DeptController {
@@ -22,20 +24,26 @@ public class DeptController {
 	@Autowired EmpService empService;
 	@Autowired DeptService deptService;
 	@Autowired JobService jobService;
+	@Autowired LocService locService;
 	
 	// 등록 폼
-	@GetMapping("/﻿insertDept")
-	public String insertDept(DeptVO vo, Model model, EmpSearchVO empvo, JobVO jobvo) {
-		model.addAttribute("empList", empService.getSearchEmp(empvo));
-		model.addAttribute("jobList", jobService.getSearchJob(jobvo));
-		return "/dept/﻿insertDept";
-	}
+	/*
+	 * @GetMapping("/insertDept") public String insertDept(DeptVO vo, Model model,
+	 * EmpSearchVO empvo, JobVO jobvo) { model.addAttribute("empList",
+	 * empService.getSearchEmp(empvo)); model.addAttribute("jobList",
+	 * jobService.getSearchJob(jobvo)); return "dept/﻿insertDept"; }
+	 * 
+	 * // 등록처리
+	 * 
+	 * @PostMapping("/﻿insertDept") public String insertDeptProc(DeptVO vo) {
+	 * deptService.insertDept(vo); return "redirect:/getSearchDept"; }
+	 */
 	
-	// 등록처리
-	@PostMapping("/﻿insertDept")
-	public String insertDeptProc(DeptVO vo) {
-		deptService.insertDept(vo);
-		return "redirect:/getSearchDept"; 
+	@GetMapping("/insertDept")
+	public String insertDept(DeptVO vo , Model model, EmpSearchVO empvo, LocationVO locvo) {
+		model.addAttribute("locList", locService.getSearchLoc(locvo));
+		model.addAttribute("empList", empService.getSearchEmp(empvo)); 
+		return "dept/deptInsert";
 	}
 	
 	// 수정 폼
@@ -44,7 +52,7 @@ public class DeptController {
 		model.addAttribute("deptVO", deptService.getDept(vo));
 		model.addAttribute("empList", empService.getSearchEmp(empvo));
 		model.addAttribute("jobList", jobService.getSearchJob(jobvo));
-		return "/dept/﻿updateDept";
+		return "dept/﻿updateDept";
 	}
 	
 	// 수정처리
@@ -65,7 +73,7 @@ public class DeptController {
 	@GetMapping("/getDept")
 	public String getDept(DeptVO vo, Model model) {
 		model.addAttribute("dept", deptService.getDept(vo));
-		return "/dept/﻿getDept";
+		return "dept/﻿getDept";
 	}
 	
 	// 검색 조회
@@ -82,6 +90,6 @@ public class DeptController {
 		paging.setTotalRecord(deptService.getCount(vo));
 		model.addAttribute("paging", paging);
 		model.addAttribute("list", deptService.getSearchDept(vo));
-		return "/dept/﻿getSearchDept";
+		return "dept/﻿getSearchDept";
 	}
 }

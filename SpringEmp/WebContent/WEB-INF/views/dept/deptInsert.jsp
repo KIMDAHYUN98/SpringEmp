@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>﻿dept/insertDept.jsp</title>
+<title>﻿dept/deptinsert.jsp</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 </script>
@@ -20,12 +20,12 @@
 	manager_id    
 	<form:select path="manager_id">
 			<option value="">선택</option>
-			<form:options items="${empList }" itemValue="manager_id"/>
+			<form:options items="${empList }" itemLabel="manager_id" itemValue="manager_id"/>
 	</form:select><br>
 	location_id
 	<form:select path="location_id">
 		<option value="">선택</option>
-		<form:options items="${jobList }" itemValue="location_id"/>
+		<form:options items="${locList}" itemLabel="location_id"  itemValue="location_id"/>
 	</form:select><br>
 	
 	<button type="submit">등록</button>

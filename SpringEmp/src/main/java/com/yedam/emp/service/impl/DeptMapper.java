@@ -14,7 +14,7 @@ public interface DeptMapper {
 
 	public DeptVO getDept(DeptVO vo);
 
-	public List<DeptSearchVO> getSearchDept(DeptSearchVO vo);
+	public List<DeptVO> getSearchDept(DeptVO vo);
 	
 	public int getCount(DeptSearchVO vo);
 }
